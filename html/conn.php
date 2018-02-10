@@ -28,7 +28,7 @@ return $response;
 }
 
 
-$conn = mysqli_connect("localhost","root","","face");
+$conn = mysqli_connect("localhost","root","root","face");
 //$conn = mysqli_connect("localhost","id1184091_faceid","myroot","id1184091_face");
 
 
