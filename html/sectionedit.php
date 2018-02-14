@@ -83,12 +83,11 @@
 
      
    
-
+     $base64 = base64_encode(file_get_contents('images/'.$image));
    $queryUrl = "http://api.kairos.com/enroll";
-$imageObject = '{
-    "image":"https://ediobot.000webhostapp.com/faceid/html/images/'.$image.'","subject_id":"'.$_POST['lname'].' '.$_POST['fname'].'","gallery_name":"Students"}';
+$imageObject = '{"image":"data:image/jpeg;base64,'.$base64.'","subject_id":"'.$_POST['lname'].' '.$_POST['fname'].'","gallery_name":"Students"}';
 
- 
+        
 
 
    $r = json_decode(Request($queryUrl,$imageObject),true);

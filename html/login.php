@@ -1,4 +1,3 @@
-
 <?php
 include 'conn.php';
 
@@ -16,7 +15,7 @@ if(isset($_POST['login'])){
        $Data=mysqli_fetch_array($query,MYSQLI_ASSOC);
        $_SESSION['LogId'] = $Data['Id'];
        $_SESSION['LogRole'] = $Data['Role'];
-       $_SESSION['LogName'] = $Data['Fname'].' '.$Data['Lname'];
+       $_SESSION['LogName'] = $Data['Name'];
        header('location:section.php');
 
    }else{
