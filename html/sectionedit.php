@@ -197,6 +197,15 @@ $imageObject = '{"image":"data:image/jpeg;base64,'.$base64.'","subject_id":"'.$_
                     <div class="col-md-12">
                         <div class="white-box">
                             <h3 class="box-title">Students</h3> 
+
+                        <form>
+                        <input type="hidden"  name="Id" value="<?= $Data['Id'];?>"   class="form-control form-control-line">
+                             <input type="text" name="q" class="form-control" placeholder="Search">
+                        <button type="submit" class="btn btn-info">Search</button>
+
+                        </form>
+<br>
+<br>
                        <form class="form-inline" method="post" enctype="multipart/form-data">
   <div class="form-group">
     
@@ -244,7 +253,7 @@ $imageObject = '{"image":"data:image/jpeg;base64,'.$base64.'","subject_id":"'.$_
                                               if(isset($_GET['q'])) $q = $_GET['q'];
 
 
-                                              $sql = "select * from students where SectionId = '$Data[Id]' order by Lname asc";
+                                              $sql = "select * from students where SectionId = '$Data[Id]' and (Fname like '%$q%' or Lname like '%$q%') order by Lname asc";
                                               $result = mysqli_query($conn,$sql);
 
                                                while($data=mysqli_fetch_array($result,MYSQLI_ASSOC))
