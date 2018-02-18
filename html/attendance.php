@@ -60,14 +60,14 @@ if(!isset($_SESSION['LogId'])){
 
                           <form class="form-inline"  >
   <div class="form-group">
+    <input type="txt" name="q" class="form-control" placeholder="Search...">
     <select class="form-control"  name="section">
   
     <?php 
                                             
-                                              $q='';
-                                              if(isset($_GET['q'])) $q = $_GET['q'];
+                                            
 
-                                              $sql = "select * from sections where Name like '%$q%' or Description like '%$q%'";
+                                              $sql = "select * from sections where Name like '%$q%'";
                                               $result = mysqli_query($conn,$sql);
 
                                                while($data=mysqli_fetch_array($result,MYSQLI_ASSOC))
@@ -83,7 +83,7 @@ if(!isset($_SESSION['LogId'])){
   </div>
   <div class="form-group">
   
-    <input type="date" name="date" class="form-control" id="pwd" value="<?= $_GET['date'];?>">
+    <input type="date" name="date" class="form-control" id="idate" value="<?= $_GET['date'];?>" >
   </div>
   
   <button type="submit" class="btn btn-default">Submit</button>
@@ -106,7 +106,10 @@ if(!isset($_SESSION['LogId'])){
                                               $q='';
                                               if(isset($_GET['q'])) $q = $_GET['q'];
 
-                                              $sql = "select student.*,att.Id as tid from attendances att join students student on att.StudentId = student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]'";
+                                              $sql = "select student.*,att.Id as tid from attendances att join students student on att.StudentId = student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%')";
+
+
+                                         
                                               $result = mysqli_query($conn,$sql);
 
                                                while($data=mysqli_fetch_array($result,MYSQLI_ASSOC))
@@ -141,4 +144,19 @@ if(!isset($_SESSION['LogId'])){
 
             </div>
             <!-- /.container-fluid -->
+<?php if((!isset($_GET['date']))||strlen($_GET['date']) == ''){ ?>
+            <script type="text/javascript">
+              
+
+var now = new Date();
+
+var day = ("0" + now.getDate()).slice(-2);
+var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+
+              document.getElementById("idate").value = today;
+            </script>
+            <?php } ?>
                    <?php include 'shared/footer.php';?>
