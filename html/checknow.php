@@ -66,7 +66,7 @@ if(!isset($_SESSION['LogId'])){
                                               $q='';
                                               if(isset($_GET['q'])) $q = $_GET['q'];
 
-                                              $sql = "select * from sections where Name like '%$q%' or Description like '%$q%'";
+                                              $sql = "select * from sections where Name like '%$q%' or Description like '%$q%' and TeacherId ='$_SESSION[LogId]'";
                                               $result = mysqli_query($conn,$sql);
 
                                                while($data=mysqli_fetch_array($result,MYSQLI_ASSOC))
