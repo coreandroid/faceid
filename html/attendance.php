@@ -83,7 +83,7 @@ if(!isset($_SESSION['LogId'])){
   </div>
   <div class="form-group">
   
-    <input type="date" name="date" class="form-control" id="idate" value="<?= $_GET['date'];?>" >
+    <input type="date" name="date" class="form-control" id="idate" value="<?php if(isset($_GET['date'])){echo $_GET['date'];}?>" >
   </div>
   
   <button type="submit" class="btn btn-default">Submit</button>
