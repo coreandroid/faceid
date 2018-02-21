@@ -85,7 +85,7 @@
    
      $base64 = base64_encode(file_get_contents('images/'.$image));
    $queryUrl = "http://api.kairos.com/enroll";
-$imageObject = '{"image":"data:image/jpeg;base64,'.$base64.'","subject_id":"'.$_POST['lname'].' '.$_POST['fname'].'","gallery_name":"Students"}';
+$imageObject = '{"image":"data:image/jpeg;base64,'.$base64.'","subject_id":"'.$_POST['lname'].' '.str_replace(" ", "_",$_POST['fname']).'","gallery_name":"Students"}';
 
         
 
