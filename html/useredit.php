@@ -32,6 +32,8 @@ if(!isset($_SESSION['LogId'])){
      $role = $_POST['role'];
      $password = $_POST['password'];
 
+     if($_SESSION['LogRole'] == 'Teacher') $_POST['role'] = $_SESSION['LogRole'];
+
      $stmt->execute();
 
      $stmt->close();
@@ -123,7 +125,7 @@ if(!isset($_SESSION['LogId'])){
                                         <input type="text" placeholder="Username" value="<?= $Data['Username'];?>" name="username" class="form-control form-control-line"> </div>
                                       
                                 </div>
-
+    <?php  if($_SESSION['LogRole'] == "admin") { ?>
                                   <div class="form-group">
                                     <label class="col-md-12">Role</label>
                                     <div class="col-md-12">
@@ -137,7 +139,7 @@ if(!isset($_SESSION['LogId'])){
                                          </div>
                                       
                                 </div>
-
+<?php } ?>
                                  <div class="form-group">
                                     <label class="col-md-12">Password</label>
                                     <div class="col-md-12">
