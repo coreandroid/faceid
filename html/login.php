@@ -41,8 +41,12 @@ if(isset($_POST['login'])){
   <br>
   <br>
 
-
-  <center><h2>Welcome to Attendance System</h2></center>
+<center><img src="images/logo.png" style="
+    width: 119px;
+"></center>
+<br>
+<br>
+  <center><h2>Student attendance using face recognition system</h2></center>
   <br>
   
   <form method="post">

@@ -73,8 +73,8 @@
     
   
 
-     $stmt = $conn->prepare("INSERT INTO students ( `Fname`, `Lname`, `Gender`, `SectionId`,`Image`) VALUES (?, ?, ?,?,?)");
-     $stmt->bind_param("sssss", $_POST['fname'],$_POST['lname'],$_POST['gender'], $Data['Id'],$image);
+     $stmt = $conn->prepare("INSERT INTO students ( `Fname`, `Lname`, `Gender`, `SectionId`,`Image`,`SId`,`Mname`) VALUES (?, ?, ?,?,?,?,?)");
+     $stmt->bind_param("sssssss", $_POST['fname'],$_POST['lname'],$_POST['gender'], $Data['Id'],$image,$_POST['sid'],$_POST['mname']);
      
       if (move_uploaded_file($_FILES["image"]["tmp_name"],'images/'.$_FILES["image"]["name"])) {
             $image = $_FILES["image"]["name"];
@@ -207,12 +207,19 @@ $imageObject = '{"image":"data:image/jpeg;base64,'.$base64.'","subject_id":"'.$_
 <br>
 <br>
                        <form class="form-inline" method="post" enctype="multipart/form-data">
+
   <div class="form-group">
+    <input type="text" class="form-control" id="email" required name="lname" placeholder="Last name">
+  </div>
+    <div class="form-group">
     
     <input type="text" class="form-control" id="email" required name="fname" placeholder="First name">
   </div>
-  <div class="form-group">
-    <input type="text" class="form-control" id="email" required name="lname" placeholder="Last name">
+    <div class="form-group">
+    <input type="text" class="form-control" id="email" required name="mname" placeholder="Middle name">
+  </div>
+    <div class="form-group">
+    <input type="text" class="form-control" id="email" required name="sid" placeholder="Id number">
   </div>
     <div class="form-group">
    <select class="form-control" name="gender">
@@ -223,7 +230,7 @@ $imageObject = '{"image":"data:image/jpeg;base64,'.$base64.'","subject_id":"'.$_
    </select>
   </div>
    <div class="form-group">
-    <input type="file" class="form-control" name="image" id="email" required placeholder="Lname">
+    <input type="file" style="width: 150px;" class="form-control" name="image" id="email" required placeholder="Lname">
   </div>
  
  
@@ -238,10 +245,10 @@ $imageObject = '{"image":"data:image/jpeg;base64,'.$base64.'","subject_id":"'.$_
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>ID #</th>
                                             <th>Image</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
+                                            <th>Name</th>
+                                       
                                             <th>Gender</th>
                                             <th></th>
                                         </tr>
@@ -262,9 +269,9 @@ $imageObject = '{"image":"data:image/jpeg;base64,'.$base64.'","subject_id":"'.$_
 
                                              ?>
                                             <tr>
-                                                <td><?= $data['Id'];?></td>
+                                                <td><?= $data['SId'];?></td>
                                                 <td><img src="images/<?= $data['Image']; ?>" style="width: 70px; height: 70px;"></td>
-                                                <td><?= $data['Lname'].', '.$data['Fname'];?></td>
+                                                <td><?= $data['Lname'].', '.$data['Fname'].' '.$data['Mname'];?></td>
                                                 <td><?= $data['Gender'];?></td>
                                                 
                                                 <td><a href="studentdelete.php?Id=<?= $data['Id'];?>" class="btn btn-danger">Delete</a></td>

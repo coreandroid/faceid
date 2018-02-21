@@ -129,7 +129,7 @@ if(!isset($_SESSION['LogId'])){
                                     <div class="col-md-12">
                                         <select  id="role"  name="role" class="form-control form-control-line">
                                           
-                                        <option>user</option>
+                                        <option>Teacher</option>
                                         <option>admin</option>
 
                                         </select>
