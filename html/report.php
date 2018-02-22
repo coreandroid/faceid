@@ -41,7 +41,7 @@ if(!isset($_SESSION['LogId'])){
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h2 class="page-title">Attendance</h2>
+                        <h2 class="page-title">Attendance Report</h2>
 
 
                         <br> 
@@ -58,9 +58,9 @@ if(!isset($_SESSION['LogId'])){
                             
                             <div class="table-responsive">
 
-                          <form class="form-inline"  >
+                          <form class="form-inline" id="form" >
   <div class="form-group">
-    <input type="txt" name="q" class="form-control" placeholder="Search...">
+    
     <select class="form-control"  name="section">
   
     <?php 
@@ -83,7 +83,8 @@ if(!isset($_SESSION['LogId'])){
   </div>
   <div class="form-group">
   
-    <input type="date" name="date" class="form-control" id="idate" value="<?php if(isset($_GET['date'])){echo $_GET['date'];}?>" >
+    <input type="date" name="dfrom" class="form-control" id="idate" value="<?php if(isset($_GET['dfrom'])){echo $_GET['dfrom'];}?>" >
+    <input type="date" name="dto" class="form-control" id="iidate" value="<?php if(isset($_GET['dto'])){echo $_GET['dto'];}?>" >
   </div>
   
   <button type="submit" class="btn btn-default">Submit</button>
@@ -106,7 +107,7 @@ if(!isset($_SESSION['LogId'])){
                                               $q='';
                                               if(isset($_GET['q'])) $q = $_GET['q'];
 
-                                              $sql = "select student.*,att.Id as tid from attendances att join students student on att.StudentId = student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%')";
+                                              $sql = "SELECT tstudent.*,ifnull(Pcounts.PCount,0) as PCount from (select student.*,count(att.PDate) as PCount from attendances att right join students student on att.StudentId = student.Id where att.SectionId = '$_GET[section]' and att.PDate >= '$_GET[dfrom]' and att.PDate <= '$_GET[dto]' group by student.Id) Pcounts right join students tstudent on tstudent.Id = Pcounts.Id";
 
 
                                          
@@ -124,7 +125,7 @@ if(!isset($_SESSION['LogId'])){
                                                 <td><?php echo $data['Gender'];?></td>
                                         
                                                
-                                                <td class="text-primary"><a href="deleteattendance.php?Id=<?php echo $data['tid'];?>" class="btn btn-danger btn-sm">Delete</a></td>
+                                                <td class="text-primary"><?= $data['PCount']?></td>
                                             </tr>
                                             <?php }?>
                                         </tbody>
@@ -156,7 +157,9 @@ var month = ("0" + (now.getMonth() + 1)).slice(-2);
 var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 
 
-              document.getElementById("idate").value = today;
+              document.getElementById("idate").value = now.getFullYear()+"-"+(month)+"-01";
+              document.getElementById("iidate").value = now.getFullYear()+"-"+( ("0" + (now.getMonth() + 2)).slice(-2))+"-01";
+          
             </script>
             <?php } ?>
                    <?php include 'shared/footer.php';?>

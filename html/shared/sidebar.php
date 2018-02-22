@@ -16,6 +16,9 @@
                      <li>
                         <a href="checknow.php" class="waves-effect"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i>Check Attendance</a>
                     </li>
+                      <li>
+                        <a href="report.php" class="waves-effect"><i class="fa fa-file fa-fw" aria-hidden="true"></i>Report</a>
+                    </li>
                      <?php  if($_SESSION['LogRole'] == "admin") { ?>
                       <li>
                         <a href="user.php" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>User account</a>
