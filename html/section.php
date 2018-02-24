@@ -1,7 +1,6 @@
 
 <?php
-
-   include 'conn.php';
+include 'conn.php';
 if(!isset($_SESSION['LogId'])){
 
   header('location:login.php');
@@ -63,6 +62,7 @@ if(!isset($_SESSION['LogId'])){
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Description</th>
+                                            <th>Number of student</th>
                                             <td></td>
                                         </tr>
                                     </thead>
@@ -85,6 +85,14 @@ if(!isset($_SESSION['LogId'])){
                                               <td><?php echo $data['Id'];?></td>
                                                 <td><?php echo $data['Name'];?></td>
                                                 <td><?php echo $data['Description'];?></td>
+                                                <td><?php 
+                                            
+                                                      $squery = mysqli_query($conn,"select * from students where SectionId = '$data[Id]'");
+
+                                                      echo mysqli_num_rows($squery);
+ 
+
+                                                ?></td>
                                         
                                                
                                                 <td class="text-primary"><a href="sectionedit.php?Id=<?php echo $data['Id'];?>" class="btn btn-info btn-sm">Edit</a> <a href="deletesection.php?Id=<?php echo $data['Id'];?>" class="btn btn-danger btn-sm">Delete</a></td>
