@@ -111,12 +111,10 @@ if(!isset($_SESSION['LogId'])){
 
             setInterval(function(){
 
-                 document.getElementById("demo").innerHTML = new Date().toUTCString();
+                 document.getElementById("demo").innerHTML = new Date().toString().replace("GMT+0800 (Malay Peninsula Standard Time)","");
 
             },1000);
-
-
-            // Put event listeners into place
+           // Put event listeners into place
         window.addEventListener("DOMContentLoaded", function() {
             // Grab elements, create settings, etc.
             var canvas = document.getElementById('canvas');
