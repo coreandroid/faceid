@@ -132,7 +132,7 @@ if(!isset($_SESSION['LogId'])){
                                                 $sql = "select student.*,att.Id as tid from attendances att left join students student on att.StudentId = student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc";
                                                }
                                               }
-                                              else ($_GET['type'] == 'Absent'){
+                                              else if($_GET['type'] == 'Absent'){
 
 
                                                if($_GET['section'] == 'all'){
