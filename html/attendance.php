@@ -91,14 +91,14 @@ if(!isset($_SESSION['LogId'])){
     <input type="date" name="date" class="form-control" id="idate" value="<?php if(isset($_GET['date'])){echo $_GET['date'];}?>" >
   </div>
   
-  <button type="submit" class="btn btn-default">Submit</button>
+  <button type="submit" class="btn btn-default no-print">Submit</button>
 </form>
      <br>
 
                                                 <td><?php echo $data['Gender'];?></td>
- <button class="btn btn-info " onclick="window.print()">Print</button>
+ <button class="btn btn-info no-print" onclick="window.print()">Print</button>
                                                 <td><?php echo $data['Gender'];?></td>
-       <a href="export.php?php?q=&type=<?php if(isset($_GET['type'])){echo $_GET['type'];}?>&section=<?php if(isset($_GET['section'])){echo $_GET['section'];}?>&date=<?php if(isset($_GET['date'])){echo $_GET['date'];}?>" class="btn btn-success ">Export</a>
+       <a href="export.php?php?q=&type=<?php if(isset($_GET['type'])){echo $_GET['type'];}?>&section=<?php if(isset($_GET['section'])){echo $_GET['section'];}?>&date=<?php if(isset($_GET['date'])){echo $_GET['date'];}?>" class="btn btn-success no-print">Export</a>
 
                                 <?php  if(isset($_GET['section'])) { ?>
                                 <table class="table">
@@ -158,7 +158,7 @@ if(!isset($_SESSION['LogId'])){
                                              
                                         
                                                
-                                                <td class="text-primary no-print"><a href="deleteattendance.php?Id=<?php echo $data['tid'];?>" class="btn btn-danger btn-sm">Delete</a></td>
+                                                <td class="text-primary no-print"><a href="deleteattendance.php?Id=<?php echo $data['tid'];?>" class="btn btn-danger btn-sm no-print">Delete</a></td>
                                             </tr>
                                             <?php }?>
                                         </tbody>
