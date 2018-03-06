@@ -149,7 +149,7 @@ if(!isset($_SESSION['LogId'])){
 
                                                  $sql = "select student.*,att.Id as tid from attendances att left join students student on att.StudentId <> student.Id  where att.SectionId in (select Id from sections where  TeacherId ='$_SESSION[LogId]') and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc";
 
-                                         
+                                         }
                                               $result = mysqli_query($conn,$sql);
 
                                                while($data=mysqli_fetch_array($result,MYSQLI_ASSOC))
