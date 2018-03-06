@@ -59,7 +59,7 @@ if(!isset($_SESSION['LogId'])){
                             <div class="table-responsive">
 
                           <form class="form-inline no-print"  >
-  <div class="form-group">
+  <div class="form-group no-print">
     <input type="txt" name="q" class="form-control" placeholder="Search...">
      <select class="form-control"  name="type">
        <option>All</option>
