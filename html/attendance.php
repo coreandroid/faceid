@@ -151,10 +151,11 @@ if(!isset($_SESSION['LogId'])){
                                             <tr>
                                              
                                               <td><?php echo $data['SId'];?></td>
+                                                 <td><?php echo $_GET['date'];?></td>
                                                 <td><?php echo ucfirst($data['Lname']);?> <?php echo ucfirst($data['Fname']);?></td>
                                                 <td><?php echo $data['Gender'];?></td>
                                                 <td><?php echo $_GET['type'];?></td>
-                                                <td><?php echo $_GET['date'];?></td>
+                                             
                                         
                                                
                                                 <td class="text-primary no-print"><a href="deleteattendance.php?Id=<?php echo $data['tid'];?>" class="btn btn-danger btn-sm">Delete</a></td>
