@@ -104,9 +104,11 @@ if(!isset($_SESSION['LogId'])){
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                              <th>Date</th>
                                             <th>Name</th>
                                             <th>Gender</th>
                                             <th>Status</th>
+                                        
                                             <td></td>
                                         </tr>
                                     </thead>
@@ -155,6 +157,7 @@ if(!isset($_SESSION['LogId'])){
                                                 <td><?php echo ucfirst($data['Lname']);?> <?php echo ucfirst($data['Fname']);?></td>
                                                 <td><?php echo $data['Gender'];?></td>
                                                 <td><?php echo $_GET['type'];?></td>
+                                                <td><?php echo $_GET['date'];?></td>
                                         
                                                
                                                 <td class="text-primary no-print"><a href="deleteattendance.php?Id=<?php echo $data['tid'];?>" class="btn btn-danger btn-sm">Delete</a></td>
