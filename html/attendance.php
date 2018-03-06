@@ -58,15 +58,15 @@ if(!isset($_SESSION['LogId'])){
                             
                             <div class="table-responsive">
 
-                          <form class="form-inline"  >
+                          <form class="form-inline no-print"  >
   <div class="form-group">
     <input type="txt" name="q" class="form-control" placeholder="Search...">
      <select class="form-control"  name="type">
       <option>Present</option>
       <option>Absent</option>
      </select>
-    <select class="form-control"  name="section">
-  
+    <select class="form-control no-print"  name="section">
+       <option value="all">all</option>
     <?php 
                                             
                                             
@@ -85,7 +85,7 @@ if(!isset($_SESSION['LogId'])){
 </select>
    
   </div>
-  <div class="form-group">
+  <div class="form-group no-print">
   
     <input type="date" name="date" class="form-control" id="idate" value="<?php if(isset($_GET['date'])){echo $_GET['date'];}?>" >
   </div>
@@ -94,7 +94,10 @@ if(!isset($_SESSION['LogId'])){
 </form>
      <br>
 
-       <a href="export.php?php?q=&type=<?php if(isset($_GET['type'])){echo $_GET['type'];}?>&section=<?php if(isset($_GET['section'])){echo $_GET['section'];}?>&date=<?php if(isset($_GET['date'])){echo $_GET['date'];}?>" class="btn btn-success">Export</a>
+                                                <td><?php echo $data['Gender'];?></td>
+ <button class="btn btn-info " onclick="window.print()">Print</button>
+                                                <td><?php echo $data['Gender'];?></td>
+       <a href="export.php?php?q=&type=<?php if(isset($_GET['type'])){echo $_GET['type'];}?>&section=<?php if(isset($_GET['section'])){echo $_GET['section'];}?>&date=<?php if(isset($_GET['date'])){echo $_GET['date'];}?>" class="btn btn-success ">Export</a>
 
                                 <?php  if(isset($_GET['section'])) { ?>
                                 <table class="table">
@@ -103,6 +106,7 @@ if(!isset($_SESSION['LogId'])){
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Gender</th>
+                                            <th>Status</th>
                                             <td></td>
                                         </tr>
                                     </thead>
@@ -115,13 +119,27 @@ if(!isset($_SESSION['LogId'])){
                                               if($_GET['type'] == 'Present')
                                               {
 
-                                                $sql = "select student.*,att.Id as tid from attendances att left join students student on att.StudentId = student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc";
+                                                  if($_GET['section'] == 'all'){
+                                                  
+                                                    $sql = "select student.*,att.Id as tid from attendances att left join students student on att.StudentId = student.Id  where att.SectionId in (select Id from sections where  TeacherId ='$_SESSION[LogId]') and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc";
 
+                                                  }
+                                                  else{
+
+                                                $sql = "select student.*,att.Id as tid from attendances att left join students student on att.StudentId = student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc";
+                                               }
                                               }
                                               else{
 
-                                                $sql = "select student.*,att.Id as tid from attendances att left join students student on att.StudentId <> student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc";
 
+                                               if($_GET['section'] == 'all'){
+
+                                                 $sql = "select student.*,att.Id as tid from attendances att left join students student on att.StudentId <> student.Id  where att.SectionId in (select Id from sections where  TeacherId ='$_SESSION[LogId]') and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc";
+
+                                               }else{
+                                               
+                                                $sql = "select student.*,att.Id as tid from attendances att left join students student on att.StudentId <> student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc";
+                                               }
                                               }
                                          
                                               $result = mysqli_query($conn,$sql);
@@ -136,9 +154,10 @@ if(!isset($_SESSION['LogId'])){
                                               <td><?php echo $data['SId'];?></td>
                                                 <td><?php echo ucfirst($data['Lname']);?> <?php echo ucfirst($data['Fname']);?></td>
                                                 <td><?php echo $data['Gender'];?></td>
+                                                <td><?php echo $_GET['type'];?></td>
                                         
                                                
-                                                <td class="text-primary"><a href="deleteattendance.php?Id=<?php echo $data['tid'];?>" class="btn btn-danger btn-sm">Delete</a></td>
+                                                <td class="text-primary no-print"><a href="deleteattendance.php?Id=<?php echo $data['tid'];?>" class="btn btn-danger btn-sm">Delete</a></td>
                                             </tr>
                                             <?php }?>
                                         </tbody>
