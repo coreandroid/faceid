@@ -62,7 +62,7 @@ if(!isset($_SESSION['LogId'])){
   <div class="form-group no-print">
     <input type="txt" name="q" class="form-control" placeholder="Search...">
      <select class="form-control"  name="type">
-       <option>All</option>
+     
       <option>Present</option>
       <option>Absent</option>
      </select>
