@@ -62,11 +62,12 @@ if(!isset($_SESSION['LogId'])){
   <div class="form-group">
     <input type="txt" name="q" class="form-control" placeholder="Search...">
      <select class="form-control"  name="type">
+       <option>All</option>
       <option>Present</option>
       <option>Absent</option>
      </select>
     <select class="form-control no-print"  name="section">
-       <option value="all">all</option>
+       
     <?php 
                                             
                                             
@@ -131,7 +132,7 @@ if(!isset($_SESSION['LogId'])){
                                                 $sql = "select student.*,att.Id as tid from attendances att left join students student on att.StudentId = student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc";
                                                }
                                               }
-                                              else{
+                                              else ($_GET['type'] == 'Absent'){
 
 
                                                if($_GET['section'] == 'all'){
@@ -141,8 +142,13 @@ if(!isset($_SESSION['LogId'])){
                                                }else{
                                                
                                                 $sql = "select student.*,att.Id as tid from attendances att left join students student on att.StudentId <> student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc";
+                                               
                                                }
                                               }
+                                            else{
+
+                                                 $sql = "select student.*,att.Id as tid from attendances att left join students student on att.StudentId <> student.Id  where att.SectionId in (select Id from sections where  TeacherId ='$_SESSION[LogId]') and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc";
+
                                          
                                               $result = mysqli_query($conn,$sql);
 
