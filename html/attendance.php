@@ -9,11 +9,13 @@ if(!isset($_SESSION['LogId'])){
 }
 
 
+if(isset($_GET['section'])){
+
 $ssql  = mysqli_query($conn,"select * from sections where Id='$_GET[section]'");
 
 
 $sdata =  mysqli_fetch_array($ssql,MYSQLI_ASSOC);
-
+}
 
 ?>
 <?php include 'shared/header.php';?>
