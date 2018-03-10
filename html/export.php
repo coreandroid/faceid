@@ -6,7 +6,13 @@ if(!isset($_SESSION['LogId'])){
 
 }
 
-$filename ="report.xls"; 
+
+$ssql  = mysqli_query($conn,"select * from sections where Id='$_GET[section]'");
+
+
+$sdata =  mysqli_fetch_array($ssql,MYSQLI_ASSOC);
+
+$filename ="$sdata[Name]_report.xls"; 
   header("Content-Type: application/vnd.ms-excel");
  header("Content-Disposition: attachment; filename=\"$filename\"");
 
@@ -20,6 +26,7 @@ $filename ="report.xls";
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                              <th>Date</th>
                                             <th>ID</th>
                                             <th>Last name</th>
                                             <th>First name</th>
@@ -54,6 +61,7 @@ $filename ="report.xls";
                                              ?>
                                             <tr>
                                              
+                                              <td><?php echo $_GET['date'];?></td>
                                               <td><?php echo $data['SId'];?></td>
                                                 <td><?php echo ucfirst($data['Lname']);?></td>
                                                 <td><?php echo ucfirst($data['Fname']);?></td>
