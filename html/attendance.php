@@ -51,7 +51,7 @@ $sdata =  mysqli_fetch_array($ssql,MYSQLI_ASSOC);
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h2 class="page-title">Attendance <?php echo $sdata['Name'];?></h2>
+                        <h2 class="page-title">Attendance <?php if(isset($sdata)) {echo $sdata['Name'];}?></h2>
 
 
                         <br> 
