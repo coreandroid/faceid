@@ -140,7 +140,7 @@ $sdata =  mysqli_fetch_array($ssql,MYSQLI_ASSOC);
                                               else if($_GET['type'] == 'Absent'){
 
  
-                                                $sql = "select * from (select student.*,att.Id as tid from attendances att left join students student on att.StudentId <> student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc) m where m.SectionId='$_GET[section]'";
+                                                $sql = "select * from (select student.*,att.Id as tid from attendances att left join students student on att.StudentId <> student.Id  where att.SectionId = '$_GET[section]' and att.PDate = '$_GET[date]' and (student.Fname like '%$q%' or student.Lname like '%$q%') order by student.Lname asc) m where m.SectionId='$_GET[section]' group by m.SId";
                                                
                                               
                                             
