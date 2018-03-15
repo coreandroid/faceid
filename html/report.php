@@ -11,7 +11,13 @@ if(!isset($_SESSION['LogId'])){
 
 
 
+if(isset($_GET['section'])){
 
+$ssql  = mysqli_query($conn,"select * from sections where Id='$_GET[section]'");
+
+
+$D =  mysqli_fetch_array($ssql,MYSQLI_ASSOC);
+}
 
 
 
@@ -147,6 +153,8 @@ return $days; // 4
 </form>
      
      <br>    
+     <div>Section: <strong><?php if(isset($D)) {echo $D['Name'];}?></strong></div>
+     <br>
 <div>Period: <b><?php if(isset($_GET['dfrom'])) {echo $_GET['dfrom'];}?></b> to <b><?php if(isset($_GET['dto'])) {echo $_GET['dto'];}?></b></div>
      <br>
 
