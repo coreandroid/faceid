@@ -7,6 +7,60 @@ if(!isset($_SESSION['LogId'])){
   header('location:login.php');
 
 }
+
+
+
+
+
+
+
+
+function GetDays($start,$end){
+
+$start = new DateTime($start);
+$end = new DateTime($end);
+// otherwise the  end date is excluded (bug?)
+$end->modify('+1 day');
+
+$interval = $end->diff($start);
+
+// total days
+$days = $interval->days;
+
+// create an iterateable period of date (P1D equates to 1 day)
+$period = new DatePeriod($start, new DateInterval('P1D'), $end);
+
+// best stored as array, so you can add more than one
+$holidays = array('2012-09-07');
+
+foreach($period as $dt) {
+    $curr = $dt->format('D');
+
+    // substract if Saturday or Sunday
+    if ($curr == 'Sat' || $curr == 'Sun') {
+        $days--;
+    }
+
+    // (optional) for the updated question
+    elseif (in_array($dt->format('Y-m-d'), $holidays)) {
+        $days--;
+    }
+}
+
+
+return $days; // 4
+
+}
+
+
+
+
+
+
+
+
+
+
 ?>
 <?php include 'shared/header.php';?>
 <body class="fix-header">
@@ -41,7 +95,7 @@ if(!isset($_SESSION['LogId'])){
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h2 class="page-title">Attendance Report</h2>
+                        <h2 class="page-title">Attendance Summary</h2>
 
 
                         <br> 
@@ -59,12 +113,13 @@ if(!isset($_SESSION['LogId'])){
                             <div class="table-responsive">
 
                           <form class="form-inline" id="form" >
-  <div class="form-group">
+  <div class="form-group no-print">
     
-    <select class="form-control"  name="section">
+    <select class="form-control no-print"  name="section">
   
     <?php 
-                                            
+                                   
+         
                                             
 
                                               $sql = "select * from sections where Name like '%$q%' and TeacherId ='$_SESSION[LogId]'";
@@ -81,15 +136,19 @@ if(!isset($_SESSION['LogId'])){
 </select>
    
   </div>
-  <div class="form-group">
+  <div class="form-group no-print">
   
     <input type="date" name="dfrom" class="form-control" id="idate" value="<?php if(isset($_GET['dfrom'])){echo $_GET['dfrom'];}?>" >
     <input type="date" name="dto" class="form-control" id="iidate" value="<?php if(isset($_GET['dto'])){echo $_GET['dto'];}?>" >
   </div>
   
-  <button type="submit" class="btn btn-default">Submit</button>
+  <button type="submit" class="btn btn-default no-print">Submit</button>
+  <button type="button" onclick="window.print()" class="btn btn-success no-print">Print</button>
 </form>
      
+     <br>    
+<div>Period: <b><?php if(isset($_GET['dfrom'])) {echo $_GET['dfrom'];}?></b> to <b><?php if(isset($_GET['dto'])) {echo $_GET['dto'];}?></b></div>
+     <br>
 
                                 <?php  if(isset($_GET['section'])) { ?>
                                 <table class="table">
@@ -98,7 +157,7 @@ if(!isset($_SESSION['LogId'])){
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Gender</th>
-                                            <td></td>
+                                            <td>Absences</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -125,7 +184,7 @@ if(!isset($_SESSION['LogId'])){
                                                 <td><?php echo $data['Gender'];?></td>
                                         
                                                
-                                                <td class="text-primary"><?= $data['PCount']?></td>
+                                                <td class="text-primary"><?= GetDays($_GET['dfrom'],$_GET['dto']) - $data['PCount']?></td>
                                             </tr>
                                             <?php }?>
                                         </tbody>
